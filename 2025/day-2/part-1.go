@@ -55,6 +55,7 @@ func main() {
 
 out:
 	for {
+		// Repeat the number using just maths (e.g. 123 -> 123123)
 		num := i*int(math.Pow10(int(math.Floor(math.Log10(float64(i))))+1)) + i
 
 		for num > ranges[currentRange].High {
