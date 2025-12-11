@@ -6,18 +6,18 @@ import (
 	"os"
 )
 
-func updateAdjacent(x, y int, delta int8, adjacentMatrix *[][]int8, matrix *[][]bool, toRemove *map[uint16]bool) {
-	updateSpot(x-1, y-1, delta, adjacentMatrix, matrix, toRemove) // -1, -1 TL
-	updateSpot(x, y-1, delta, adjacentMatrix, matrix, toRemove)   //  0, -1 TM
-	updateSpot(x+1, y-1, delta, adjacentMatrix, matrix, toRemove) // +1, -1 TR
-	updateSpot(x-1, y, delta, adjacentMatrix, matrix, toRemove)   // -1,  0 ML
-	updateSpot(x+1, y, delta, adjacentMatrix, matrix, toRemove)   // +1,  0 MR
-	updateSpot(x-1, y+1, delta, adjacentMatrix, matrix, toRemove) // -1, +1 BL
-	updateSpot(x, y+1, delta, adjacentMatrix, matrix, toRemove)   //  0, +1 BM
-	updateSpot(x+1, y+1, delta, adjacentMatrix, matrix, toRemove) // +1, +1 BR
+func updateAdjacentAndAddToRemoveIfLow(x, y int, delta int8, adjacentMatrix *[][]int8, matrix *[][]bool, toRemove *map[uint16]bool) {
+	updatePointAndAddToRemoveIfLow(x-1, y-1, delta, adjacentMatrix, matrix, toRemove) // -1, -1 TL
+	updatePointAndAddToRemoveIfLow(x, y-1, delta, adjacentMatrix, matrix, toRemove)   //  0, -1 TM
+	updatePointAndAddToRemoveIfLow(x+1, y-1, delta, adjacentMatrix, matrix, toRemove) // +1, -1 TR
+	updatePointAndAddToRemoveIfLow(x-1, y, delta, adjacentMatrix, matrix, toRemove)   // -1,  0 ML
+	updatePointAndAddToRemoveIfLow(x+1, y, delta, adjacentMatrix, matrix, toRemove)   // +1,  0 MR
+	updatePointAndAddToRemoveIfLow(x-1, y+1, delta, adjacentMatrix, matrix, toRemove) // -1, +1 BL
+	updatePointAndAddToRemoveIfLow(x, y+1, delta, adjacentMatrix, matrix, toRemove)   //  0, +1 BM
+	updatePointAndAddToRemoveIfLow(x+1, y+1, delta, adjacentMatrix, matrix, toRemove) // +1, +1 BR
 }
 
-func updateSpot(x, y int, delta int8, adjacentMatrix *[][]int8, matrix *[][]bool, toRemove *map[uint16]bool) {
+func updatePointAndAddToRemoveIfLow(x, y int, delta int8, adjacentMatrix *[][]int8, matrix *[][]bool, toRemove *map[uint16]bool) {
 	// Return 0 if OOB
 	if y < 0 || x < 0 || y >= len(*adjacentMatrix) || x >= len((*adjacentMatrix)[y]) {
 		return
@@ -70,7 +70,7 @@ func main() {
 				continue
 			}
 
-			updateAdjacent(x, y, 1, &adjacentMatrix, nil, nil)
+			updateAdjacentAndAddToRemoveIfLow(x, y, 1, &adjacentMatrix, nil, nil)
 		}
 	}
 
@@ -99,7 +99,7 @@ func main() {
 			x := int(pos & 0xFF)
 
 			matrix[y][x] = false
-			updateAdjacent(x, y, -1, &adjacentMatrix, &matrix, &toRemove)
+			updateAdjacentAndAddToRemoveIfLow(x, y, -1, &adjacentMatrix, &matrix, &toRemove)
 
 			reachable++
 		}
