@@ -78,7 +78,7 @@ func main() {
 		}
 
 		repeats++
-		if math.Pow10(repeats) > float64(ranges[len(ranges)-1].High) {
+		if int(math.Pow10(repeats)) > ranges[len(ranges)-1].High {
 			break
 		}
 	}
