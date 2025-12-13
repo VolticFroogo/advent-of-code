@@ -35,12 +35,12 @@ func main() {
 		}
 	}
 
-	totalTimeslines := 0
+	totalTimelines := 0
 	for _, timeline := range beamTimelines {
-		totalTimeslines += timeline
+		totalTimelines += timeline
 	}
 
-	log.Printf("Password: %v\n", totalTimeslines)
+	log.Printf("Password: %v\n", totalTimelines)
 
 	err = file.Close()
 	if err != nil {
