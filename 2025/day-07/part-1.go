@@ -41,19 +41,16 @@ func main() {
 
 	for scanner.Scan() {
 		bytes = scanner.Bytes()
-		outputBeams := make([]bool, len(bytes))
-		copy(outputBeams, beams)
 
 		for i, char := range bytes {
 			if char == '^' && beams[i] {
 				splits++
-				outputBeams[i-1] = true
-				outputBeams[i] = false
-				outputBeams[i+1] = true
+				beams[i-1] = true
+				beams[i] = false
+				beams[i+1] = true
 			}
 		}
 
-		copy(beams, outputBeams)
 		// printLine(&bytes, &beams)
 	}
 

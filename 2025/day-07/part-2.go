@@ -25,18 +25,14 @@ func main() {
 
 	for scanner.Scan() {
 		bytes = scanner.Bytes()
-		outputBeamTimelines := make([]int, len(bytes))
-		copy(outputBeamTimelines, beamTimelines)
 
 		for i, char := range bytes {
 			if char == '^' && beamTimelines[i] != 0 {
-				outputBeamTimelines[i-1] += beamTimelines[i]
-				outputBeamTimelines[i] = 0
-				outputBeamTimelines[i+1] += beamTimelines[i]
+				beamTimelines[i-1] += beamTimelines[i]
+				beamTimelines[i+1] += beamTimelines[i]
+				beamTimelines[i] = 0
 			}
 		}
-
-		copy(beamTimelines, outputBeamTimelines)
 	}
 
 	totalTimeslines := 0
